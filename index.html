@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f2eee5">
+<title>PEN Engineering | Engineering and software studio</title>
+<meta name="description" content="PEN Engineering is an independent engineering and software studio. We turn hard problems and new ideas into working products, from professional tools to games.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2315171c'/%3E%3Cpath d='M4 19c2-9 5-9 7 0s5 9 7 0h3v-5h3v-5h4' fill='none' stroke='%23e0764f' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --paper:#f2eee5;
+  --paper-2:#e8e2d5;
+  --card:#faf8f3;
+  --ink:#15171c;
+  --ink-2:#4b4e56;
+  --ink-3:#7c7e84;
+  --rule:rgba(21,23,28,.14);
+  --copper:#b3492b;
+  --copper-soft:rgba(179,73,43,.12);
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  --wrap:1120px;
+}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+::selection{background:var(--copper);color:var(--paper)}
+:focus-visible{outline:2px solid var(--copper);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.label b{font-weight:500;color:var(--copper)}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(242,238,229,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.scrolled{border-bottom-color:var(--rule)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.01em}
+.brand svg{width:30px;height:30px}
+.brand span{font-family:var(--sans);font-weight:400;color:var(--ink-2);font-size:15px;letter-spacing:0}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links a{font-size:15px;text-decoration:none;color:var(--ink-2);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links .cta{color:var(--ink);border:1px solid var(--ink);padding:7px 16px;border-radius:999px;transition:background .2s,color .2s}
+.nav-links .cta:hover{background:var(--ink);color:var(--paper)}
+
+/* HERO */
+.hero{position:relative;min-height:max(100svh,780px);overflow:hidden;border-bottom:1px solid var(--rule)}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;z-index:2;padding-top:clamp(120px,19vh,180px);pointer-events:none}
+.hero .wrap>*{pointer-events:auto}
+.hero h1{font-family:var(--display);font-weight:500;font-size:clamp(2.6rem,6.3vw,5.1rem);line-height:1.02;letter-spacing:-.025em;margin:20px 0 22px}
+.hero h1 em{font-style:italic;color:var(--copper)}
+.hero p.lede{max-width:500px;color:var(--ink-2);font-size:1.07rem}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;text-decoration:none;padding:12px 22px;border-radius:999px;border:1px solid var(--ink);transition:background .2s,color .2s,border-color .2s}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:var(--copper);border-color:var(--copper)}
+.btn.ghost{background:rgba(242,238,229,.7)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+.btn svg{width:14px;height:14px}
+.scene-note{position:absolute;z-index:2;right:28px;bottom:22px;max-width:270px;text-align:right;font-family:var(--mono);font-size:11.5px;line-height:1.5;color:var(--ink-2);background:rgba(242,238,229,.78);padding:6px 10px;border-radius:4px}
+
+/* SECTIONS */
+section{padding:clamp(72px,10vw,128px) 0}
+.sec-head{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:clamp(40px,6vw,72px);max-width:720px}
+.sec-head h2,.about h2,.contact h2{font-family:var(--display);font-weight:500;font-size:clamp(1.9rem,3.8vw,3rem);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.sec-head p{color:var(--ink-2)}
+
+/* PROJECTS */
+.project{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(32px,5vw,72px);align-items:center;padding:clamp(36px,5vw,64px) 0;border-top:1px solid var(--rule)}
+.project.flip .media{order:2}
+.project h3{font-family:var(--display);font-weight:500;font-size:clamp(1.9rem,3.2vw,2.6rem);letter-spacing:-.02em;line-height:1.1;margin:12px 0 10px}
+.project .tag{font-size:1.14rem;line-height:1.4;font-weight:500;margin-bottom:14px}
+.project p.body{color:var(--ink-2)}
+.facts{margin:24px 0 28px;border-top:1px solid var(--rule)}
+.facts div{display:grid;grid-template-columns:104px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.facts dt{font-family:var(--mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);padding-top:3px}
+.facts dd{color:var(--ink)}
+.links{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.soon{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);border:1px dashed var(--ink-3);padding:10px 16px;border-radius:999px}
+
+.window{background:#1c1c1b;border-radius:12px;overflow:hidden;box-shadow:0 1px 0 rgba(21,23,28,.08),0 28px 60px -28px rgba(21,23,28,.5)}
+.window .bar{display:flex;align-items:center;gap:10px;padding:10px 16px;font-family:var(--mono);font-size:12px;color:#a9a8a3;border-bottom:1px solid #33332f}
+.window .bar i{width:8px;height:8px;border-radius:50%;background:#6fcf97}
+.window img{width:100%;height:auto}
+
+.phones{display:flex;align-items:flex-start;justify-content:center;gap:clamp(14px,2.4vw,28px);padding:0 4%}
+.phone{flex:1;max-width:260px;background:#15171c;padding:7px;border-radius:26px;box-shadow:0 28px 60px -28px rgba(21,23,28,.55)}
+.phone img{border-radius:20px;width:100%;height:auto}
+.phone:nth-child(2){margin-top:56px}
+
+/* PRACTICE */
+.practice{background:var(--paper-2)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(36px,4.500vw,56px) clamp(24px,4vw,56px)}
+.open{margin-top:clamp(40px,5vw,64px);font-family:var(--display);font-size:1.3rem;max-width:640px}
+.open a{color:var(--copper);text-underline-offset:4px}
+.col{border-top:2px solid var(--ink);padding-top:20px}
+.col svg{width:34px;height:34px;color:var(--copper);margin-bottom:18px}
+.col h3{font-family:var(--display);font-weight:500;font-size:1.45rem;letter-spacing:-.01em;margin-bottom:8px}
+.col p{color:var(--ink-2);font-size:16px}
+
+/* ABOUT */
+.about .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(32px,6vw,88px);align-items:start}
+.about h2 em{font-style:italic;color:var(--copper)}
+.about .text p{color:var(--ink-2);margin-bottom:16px}
+.bio{margin-top:28px;background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:24px 26px}
+.bio .name{font-family:var(--display);font-size:1.4rem;font-weight:500;letter-spacing:-.01em}
+.bio .role{font-family:var(--mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--copper);margin:4px 0 12px}
+.bio p{color:var(--ink-2);font-size:16px;margin:0}
+
+/* CONTACT */
+.contact{background:var(--ink);color:var(--paper);text-align:center}
+.contact .label{color:rgba(242,238,229,.55)}
+.contact h2{margin:16px auto 28px;max-width:18ch}
+.contact a.mail{font-family:var(--display);font-size:clamp(1.3rem,3vw,2rem);color:#e98a65;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.contact a.mail:hover{color:var(--paper)}
+.contact p{color:rgba(242,238,229,.6);margin-top:22px;font-size:15px}
+
+footer{background:var(--ink);color:rgba(242,238,229,.55);border-top:1px solid rgba(242,238,229,.14);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between;padding-top:22px;padding-bottom:22px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--paper)}
+footer nav{display:flex;gap:22px}
+
+/* REVEAL */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (max-width:860px){
+  body{font-size:16px}
+  .nav-links li:not(:last-child){display:none}
+  .project,.about .wrap{grid-template-columns:1fr}
+  .project.flip .media{order:0}
+  .cols{grid-template-columns:1fr}
+  .hero .wrap{padding-top:104px}
+  .scene-note{left:20px;right:20px;bottom:14px;max-width:none;text-align:left}
+  .wrap{padding:0 20px}
+  .facts div{grid-template-columns:92px 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="PEN Engineering home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#15171c"/><path d="M4 19c2-9 5-9 7 0s5 9 7 0h3v-5h3v-5h4" fill="none" stroke="#e0764f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      PEN <span>Engineering</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#practice">What we do</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a class="cta" href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero" style="padding:0">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="label"><b>PEN Engineering</b> &nbsp;/&nbsp; Chicago, Illinois</div>
+    <h1>Ideas, engineered <br>into things that <em>work</em>.</h1>
+    <p class="lede">We are an independent engineering and software studio. We take on hard problems and new ideas in any field and turn them into products people can use. A grid simulator and a mountain village game are two examples.</p>
+    <div class="actions">
+      <a class="btn solid" href="#work">See the work</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+  <div class="scene-note">Drawn from two of our projects: three-phase waveforms on the left become mountain terraces on the right.</div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="label">Sample projects</div>
+      <h2>Two examples from a wider range.</h2>
+      <p>One is a simulator for engineers and AI agents. The other is a game about a mountain village. They have little in common except how they were made, and that is the point: the method travels to whatever the next problem is.</p>
+    </div>
+
+    <article class="project reveal">
+      <div class="media">
+        <div class="window">
+          <div class="bar"><i></i>openemt.pro</div>
+          <img src="assets/openemt-canvas.jpg" width="1607" height="894" loading="lazy" alt="The OpenEMT canvas showing a data center UPS schematic above a plot of bus voltage and UPS output during a ride-through event.">
+        </div>
+      </div>
+      <div class="text">
+        <div class="label"><b>Sample project</b> &nbsp;/&nbsp; Professional tool, open source</div>
+        <h3>OpenEMT</h3>
+        <p class="tag">The electromagnetic transient simulator built for AI agents.</p>
+        <p class="body">One deterministic solver core with three ways in: a drag and drop canvas that runs in the browser with no install, a command line for scripts, and an MCP server that lets an AI agent build a circuit, run it, and read the results.</p>
+        <dl class="facts">
+          <div><dt>Solver</dt><dd>EMTP-style trapezoidal nodal analysis with power flow</dd></div>
+          <div><dt>Catalog</dt><dd>36 blocks: lines, transformers, machines, converters, protection</dd></div>
+          <div><dt>Status</dt><dd>Public beta, AGPL-3.0</dd></div>
+        </dl>
+        <div class="links">
+          <a class="btn solid" href="https://openemt.pro" target="_blank" rel="noopener">Open openemt.pro
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10l6-6M5 4h5v5"/></svg></a>
+          <a class="btn ghost" href="https://github.com/h-d-engineer/OpenEMT" target="_blank" rel="noopener">Source on GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="project flip reveal">
+      <div class="media">
+        <div class="phones">
+          <div class="phone"><img src="assets/hc-camp-summer.jpg" width="540" height="960" loading="lazy" alt="Hawraman Chronicles: a summer highland camp with black tents, stone pens, and sheep beside a stream."></div>
+          <div class="phone"><img src="assets/hc-story-lamps.jpg" width="540" height="960" loading="lazy" alt="Hawraman Chronicles story mode: guiding pilgrims to a sacred spring along a lamp-lit path in autumn."></div>
+        </div>
+      </div>
+      <div class="text">
+        <div class="label"><b>Sample project</b> &nbsp;/&nbsp; Educational game, playable preview</div>
+        <h3>Hawraman Chronicles</h3>
+        <p class="tag">A terraced village builder and survival game set in the mountains of Hawraman.</p>
+        <p class="body">Build a stepped mountain village, prepare for hard winters, and walk through the region's history in a story mode. Hawraman is a UNESCO World Heritage cultural landscape, and the game is shaped by first-hand local knowledge. Every piece of art is drawn in code.</p>
+        <dl class="facts">
+          <div><dt>Platforms</dt><dd>Web browser now; Android and iOS in development</dd></div>
+          <div><dt>Languages</dt><dd>English and Persian</dd></div>
+          <div><dt>Privacy</dt><dd>No ads, no tracking, saves stay on your device</dd></div>
+        </dl>
+        <div class="links">
+          <a class="btn solid" href="https://hawraman-api-production.up.railway.app/" target="_blank" rel="noopener">Play in your browser
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10l6-6M5 4h5v5"/></svg></a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="practice" id="practice">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="label">What we do</div>
+      <h2>We go where the problem goes.</h2>
+      <p>The sample projects above cover two fields. The capabilities behind them are broader, and the list below is a starting point, not a boundary.</p>
+    </div>
+    <div class="cols reveal">
+      <div class="col">
+        <svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="6" width="26" height="19" rx="2.500"/><path d="M4 12h26M12 30h10M17 25v5"/></svg>
+        <h3>Software products</h3>
+        <p>Web, mobile, and desktop applications, taken from a first sketch to a released product that people actually use.</p>
+      </div>
+      <div class="col">
+        <svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="17" cy="17" r="4"/><path d="M17 4v6M17 24v6M4 17h6M24 17h6M8 8l4.500 4.500M21.500 21.500L26 26M26 8l-4.500 4.500M12.500 21.500L8 26"/></svg>
+        <h3>AI and agents</h3>
+        <p>Tools designed for AI agents as much as for people: agent interfaces, automated workflows, and software that agents can drive end to end.</p>
+      </div>
+      <div class="col">
+        <svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c3-12 7-12 10 0s7 12 10 0c1.500-5 3.500-8 8-8"/><path d="M3 29h28" opacity=".4"/></svg>
+        <h3>Simulation and modeling</h3>
+        <p>Numerical solvers and working models of real systems, checked against known answers, so a question can be tested before it is built.</p>
+      </div>
+      <div class="col">
+        <svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 29h7v-6h7v-6h7v-6h7"/><path d="M3 29h28" opacity=".4"/></svg>
+        <h3>Games and learning</h3>
+        <p>Games and interactive experiences that teach by letting people live inside a subject, researched with care and respectful of the culture they portray.</p>
+      </div>
+      <div class="col">
+        <svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="9" r="3"/><circle cx="27" cy="9" r="3"/><circle cx="17" cy="26" r="3"/><path d="M10 9h14M8.500 11.600l7 11.800M25.500 11.600l-7 11.800"/></svg>
+        <h3>Engineering consulting</h3>
+        <p>Technical studies and analysis led by a licensed Professional Engineer. Power systems is the home discipline, not the limit.</p>
+      </div>
+      <div class="col">
+        <svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4h8M15 4v9L6 27a2 2 0 0 0 1.700 3h18.600A2 2 0 0 0 28 27l-9-14V4"/><path d="M10.500 21h13" opacity=".5"/></svg>
+        <h3>Research and prototypes</h3>
+        <p>A new idea with no clear path yet: we find out whether it works by building a prototype and measuring it.</p>
+      </div>
+    </div>
+    <p class="open reveal">Don't see your problem here? That is usually where the interesting work starts. <a href="#contact">Tell us about it.</a></p>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <h2 class="reveal">The best way to understand a system is to <em>build it</em> and watch it run.</h2>
+    <div class="text reveal">
+      <div class="label" style="margin-bottom:16px">About</div>
+      <p>That holds for a power grid, a mountain village, or whatever comes next. PEN Engineering, part of PEN LLC, is not tied to one industry or one kind of product. We bring an engineer's rigor to any problem worth solving.</p>
+      <p>We are small on purpose. Every product is designed, engineered, and tested by people who understand the subject underneath it.</p>
+      <div class="bio">
+        <div class="name">Hiva Nasiri, Ph.D., P.E.</div>
+        <div class="role">Founder and principal engineer</div>
+        <p>Ph.D. in electrical engineering and licensed Professional Engineer. Trained in power systems, and now building across simulation, AI tooling, applications, and games.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap reveal">
+    <div class="label">Contact</div>
+    <h2>Have a problem or an idea worth building?</h2>
+    <a class="mail" href="mailto:info@penengineering.net">info@penengineering.net</a>
+    <p>Chicago, Illinois. Working with clients nationally.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; <span id="yr">2026</span> PEN LLC. All rights reserved.</div>
+    <nav aria-label="Footer">
+      <a href="https://openemt.pro" target="_blank" rel="noopener">OpenEMT</a>
+      <a href="https://hawraman-api-production.up.railway.app/" target="_blank" rel="noopener">Hawraman Chronicles</a>
+      <a href="https://github.com/h-d-engineer/OpenEMT" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:info@penengineering.net">Email</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* nav border + reveal */
+(function(){
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 12); };
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  els.forEach(function(e){ io.observe(e); });
+})();
+
+/* HERO SCENE
+   A field of lines seen in perspective. On the left each line is a sine wave,
+   with neighbouring lines 120 degrees apart (three phases). Moving right, the
+   waves settle into a stepped mountain: the terraces of Hawraman. */
+(function(){
+  var canvas = document.getElementById('scene');
+  var ctx = canvas.getContext('2d');
+  var PAPER = '#f2eee5', INK = '21,23,28', COPPER = '179,73,43';
+  var ROWS = 45, K = 1.55, S_FAR = 1 / (1 + K);
+  var W = 0, H = 0, dpr = 1, t = 0, last = 0;
+  var textEl = document.querySelector('.hero .wrap'), textBottom = 0;
+  var yaw = 0, yawT = 0, visible = true;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function hash(i, j){ var n = Math.sin(i * 127.1 + j * 311.7) * 43758.5453; return n - Math.floor(n); }
+  function vnoise(x, y){
+    var i = Math.floor(x), j = Math.floor(y), fx = x - i, fy = y - j;
+    var u = fx * fx * (3 - 2 * fx), v = fy * fy * (3 - 2 * fy);
+    var a = hash(i, j), b = hash(i + 1, j), c = hash(i, j + 1), d = hash(i + 1, j + 1);
+    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+  }
+  function fbm(x, y){ return vnoise(x, y) * .55 + vnoise(x * 2.1 + 5, y * 2.1 + 3) * .3 + vnoise(x * 4.3 + 9, y * 4.3 + 1) * .15; }
+  function ss(a, b, x){ x = Math.min(1, Math.max(0, (x - a) / (b - a))); return x * x * (3 - 2 * x); }
+
+  var LEVELS = 12;
+  function height(x, z, j){
+    var m = ss(-.25, .7, x);                                   // 0 = waveform, 1 = mountain
+    var wave = .075 * Math.sin(x * 7.2 - t * 1.25 + j * 2.0944) * Math.pow(1 - m, 1.4);
+    var env = Math.exp(-Math.pow((x - 1.2) / .85, 2)) * Math.exp(-Math.pow((z - .5) / .4, 2));
+    var raw = (fbm(x * 1.7 + 3.1, z * 3.4 + 1.7) * .95 + .3) * env * m;
+    var v = raw * LEVELS, f = Math.floor(v);
+    var terr = (f + ss(.7, 1, v - f)) / LEVELS;                // flat steps with short risers
+    return wave + terr;
+  }
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    textBottom = textEl.offsetTop + textEl.offsetHeight;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+
+  function draw(){
+    ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
+    var narrow = W < 760;
+    var farY = Math.max(H * (narrow ? .7 : .6), textBottom + 34), nearY = H * 1.03;
+    var HS = narrow ? H * .3 : Math.min(H * .62, W * .42);
+    var half = Math.max(W * .5, 420);
+    var step = 5;
+
+    var pulseRow = 30, pulseX = ((t * .085) % 1.25) * W, pulseY = null;
+
+    for (var j = 0; j < ROWS; j++){
+      var z = 1 - j / (ROWS - 1);                              // far to near
+      var s = 1 / (1 + z * K);
+      var k = (s - S_FAR) / (1 - S_FAR);
+      var y0 = farY + (nearY - farY) * k;
+      var shift = yaw * (1 - k) * 46;
+
+      ctx.beginPath();
+      for (var sx = -step; sx <= W + step; sx += step){
+        var x = (sx - W / 2 - shift) / (half * s);
+        var y = y0 - height(x, z, j) * HS * s;
+        if (sx === -step) ctx.moveTo(sx, y); else ctx.lineTo(sx, y);
+      }
+      // hide everything behind this ridge
+      ctx.lineTo(W + step, H + 2); ctx.lineTo(-step, H + 2); ctx.closePath();
+      ctx.fillStyle = PAPER; ctx.fill();
+
+      // stroke only the ridge line
+      ctx.beginPath();
+      for (sx = -step; sx <= W + step; sx += step){
+        x = (sx - W / 2 - shift) / (half * s);
+        y = y0 - height(x, z, j) * HS * s;
+        if (sx === -step) ctx.moveTo(sx, y); else ctx.lineTo(sx, y);
+      }
+      var a = .16 + .62 * k;
+      if (j % 3 === 0){                                        // phase A in copper, fading to ink
+        var g = ctx.createLinearGradient(0, 0, W, 0);
+        g.addColorStop(0, 'rgba(' + COPPER + ',' + Math.min(1, a + .2) + ')');
+        g.addColorStop(.42, 'rgba(' + COPPER + ',' + Math.min(1, a + .2) + ')');
+        g.addColorStop(.7, 'rgba(' + INK + ',' + a + ')');
+        ctx.strokeStyle = g;
+      } else {
+        ctx.strokeStyle = 'rgba(' + INK + ',' + a + ')';
+      }
+      ctx.lineWidth = j % 3 === 0 ? 1.3 : 1;
+      ctx.stroke();
+
+      if (j === pulseRow){
+        var px = (pulseX - W / 2 - shift) / (half * s);
+        pulseY = y0 - height(px, z, j) * HS * s;
+        // a travelling pulse, drawn now so nearer ridges can pass in front of it
+        var gr = ctx.createRadialGradient(pulseX, pulseY, 0, pulseX, pulseY, 16);
+        gr.addColorStop(0, 'rgba(' + COPPER + ',.4)'); gr.addColorStop(1, 'rgba(' + COPPER + ',0)');
+        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(pulseX, pulseY, 16, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = 'rgb(' + COPPER + ')'; ctx.beginPath(); ctx.arc(pulseX, pulseY, 3.2, 0, 6.2832); ctx.fill();
+      }
+    }
+  }
+
+  function frame(now){
+    var dt = Math.min(.05, (now - last) / 1000) || .016; last = now;
+    if (visible){ t += dt; yaw += (yawT - yaw) * .05; draw(); }
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  window.addEventListener('pointermove', function(e){ yawT = (e.clientX / window.innerWidth - .5) * -2; }, {passive:true});
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }).observe(canvas);
+  }
+  t = 2.4;
+  resize();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+  if (!reduce) requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
